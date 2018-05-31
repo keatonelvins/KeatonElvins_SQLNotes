@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editName;
     EditText editPhone;
     EditText editAddress;
+    private boolean contactFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +94,16 @@ public class MainActivity extends AppCompatActivity {
             //Append res column 0,1,2,3 to the buffer - see StringBuffer and Cursor API
             //Delimit each of the "appends" with the line feed "\n"
            if(res.getString(1).equals(editName.getText().toString())) {
+               contactFound = true;
                buffer.append(res.getString(1) + "\n");
                buffer.append(res.getString(2) + "\n");
                buffer.append(res.getString(3) + "\n");
            }
         }
 
-
+        if(contactFound == false)
+            buffer.append("NO CONTACT FOUND");
+        contactFound = false;
 
         intent.putExtra(EXTRA_MESSAGE, buffer.toString());
         startActivity(intent);
